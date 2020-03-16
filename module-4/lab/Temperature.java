@@ -1,109 +1,180 @@
-import java.util.Scanner;
+import java.lang.Math;
 
-//Initial class
-public class Temperature
-{
-        //define its elements as private, to ensure that domains are enforced at all times
-        private float tempValue = 0;
-        private char scale;
+public class Temperature {
 
-//Getters
-public float getCelsius()
-{
-        float degreesF = getFahrenheit();
-        return 5 * (degreesF - 32) / 9;
-}
+	//instance variables
 
-public float getFahrenheit()
-{
-        float degreesC = getCelsius();
-        return 9 * (degreesC / 5) + 32;
-}
+	private double temp_value;
+	private String temp_scale;
 
-//Setters
-public void setValue(float tempValue)
-{
-        if (tempValue > -200 && tempValue < 200)
-        {
-                this.tempValue = tempValue;
-        }
-}
+	//constructors
 
-public void setScale(char scale)
-{
-        if (scale == 'C')
-        {
-                this.scale = 'C';
-        }
+	public Temperature() {
 
-        else if (scale == 'F')
-        {
-                this.scale = 'F';
-        }
+		this.temp_value = 0;
+		this.temp_scale = "C";
+	}//end no argument constructor
 
-        else
-        {
-                this.scale = 'C';
-        }
-        //return fahrenheit(F) or celsius(C)
-}
+	//constructor with temp and scale parameters
 
-public void setTempAndScale(float tempValue, char scale)
-{
-        //call both temp and scale functions, that way we need to only write the instructions once
-        setValue(tempValue);
-        setScale(scale);
-}
-//Constructors
+	public Temperature(double temp_value, String temp_scale) {
 
-public Temperature()
-{} //no argument. 
+		setTempVal(temp_value);
+		setTempScale(temp_scale);
 
-public void TempScale(float tempValue, char scale)
-{      
-        //method constructor to accept both the temp and scale
-        setValue(tempValue);
-        setScale(scale);
-}
+	}//end constructor with arguments
 
-//Comparison methods
+	//set temp value method
 
-public boolean equals(Temperature t)
-{
-        return this.tempValue == t.tempValue &&
-               this.scale == t.scale;
-}
+	public void setTempVal(double temp_value) {
 
-int compareTo(Temperature t)
-{
-        if (this.tempValue > t.tempValue) 
-        {
-                return 1;
-        }
+		if (temp_value < -200 || temp_value > 200) {
 
-        else if (this.tempValue < t.tempValue)
-        {
-                return -1;
-        }
+			this.temp_value = 0;
+		}
 
-        else    
-        {
-                return 0; 
-        }
+		else
+			this.temp_value = temp_value;
+	}//end set temp value method
 
-}//missing return statement?
+	//set temp scale method
+
+	public void setTempScale(String temp_scale) {
+
+		if (temp_scale.equals("C")) {
+
+			this.temp_scale = "C";
+		}
+
+		else if (temp_scale.equals("F")) {
+
+			this.temp_scale = "F";
+		}
+
+		else
+			this.temp_scale = "C";
+
+	}//end set scale methods
+
+	//method to set temp value and scale
+
+	public void setTempValScale(double temp_value, String temp_scale) {
+
+		setTempVal(temp_value);
+		setTempScale(temp_scale);
+
+	}//end set value and scale method
+
+	//method to get temp value
+
+	public double getTempVal() {
+		return this.temp_value;
+	}//end getTempVal
+
+	//method to get temp scale
+
+	public String getTempScale() {
+		return this.temp_scale;
+	}//end getTempScale method
+
+	//method to convert from fahrenheit to celsius
+
+	private double convertToC(double temp_value) {
 
 
-//toString...
-public String toString()
-{
-        return ("Temperature in Celsius: " + this.getCelsius() +
-        "Temperature in Fahrenheit: " + this.getFahrenheit());
+		double degreesC = ((5 * (temp_value - 32)) / 9);
 
-}//end toString
+		degreesC = (double)Math.round(degreesC *10) / 10;
+		return degreesC;
+	}// end convert to C method
 
+	//method to convert to fahrenheit
 
-}//end class
-
+	private double convertToF(double temp_value) {
 
 
+		double degreesF = (9 *(temp_value / 5)) + 32;
+		degreesF = (double)Math.round(degreesF * 10) / 10;
+		return degreesF;
+	}//end fahrenheit conversion
+
+	//get temp value in Fahrenheit method
+
+	public double getTempF() {
+
+		if (temp_scale =="F") {
+			return temp_value;
+		}
+
+		else
+			return convertToF(temp_value);
+	}//end getTempF method
+
+	//get temp in celsius
+
+	public double getTempC() {
+
+		if (temp_scale == "C") {
+			return temp_value;
+		}
+
+		else
+			return convertToC(temp_value);
+	}//end getTempC method
+
+
+	//equals comparisson method
+
+	public boolean equals(Temperature t) {
+
+		boolean compare;
+
+		if (this.temp_scale == t.temp_scale){
+			compare = this.temp_value == t.temp_value;
+		}
+
+		else if (this.temp_scale == "F") {
+			compare = this.temp_value == t.getTempF();
+		}
+
+		else
+			compare = this.temp_value == t.getTempC();
+
+
+		return compare;
+	}//end equals comparison
+
+	//to string method
+	public String toString() {
+
+		return temp_value + " degrees " + temp_scale;
+	}//end to string
+
+	//compare method
+
+	public int compareTo(Temperature t) {
+
+		if (this.temp_scale == "C") {
+
+			if (this.temp_value > t.getTempC())
+				return 1;
+
+			else if (this.temp_value < t.getTempC())
+				return -1;
+
+			else
+				return 0;
+		}//end if celsius
+
+		else {
+			if (this.temp_value > t.getTempF())
+				return 1;
+
+			else if (this.temp_value < t.getTempF())
+				return -1;
+
+			else
+				return 0;
+		}//end else
+	}//end compare to
+}//end of class
