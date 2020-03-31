@@ -26,10 +26,10 @@ public class Address {
 	
 	public Address(Address toClone)
 	{
-		toClone.street = this.street;
-		toClone.city = this.city;
-		toClone.state = this.state;
-		toClone.zip = this.zip;
+		this.street = toClone.street;
+		this.city = toClone.city;
+		this.state = toClone.state;
+		this.zip = toClone.zip;
 		
 	}
 	
@@ -86,6 +86,6 @@ public class Address {
 	@Override
 	public String toString()
 	{
-		return street + "" + city + "" + state + "" + zip; //Similar to how we've done toStrings previously
+		return street + " " + city + " " + state + " " + zip; //Similar to how we've done toStrings previously
 	}
 }

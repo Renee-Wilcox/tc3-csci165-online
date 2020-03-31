@@ -21,7 +21,7 @@ public class Customer {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		//address?
+		this.address = address;
 		
 	}
 
@@ -70,8 +70,8 @@ public class Customer {
 	
 	public Address getAddress()
 	{
-		Address add = new Address(this.address);
-		return add;
+		Address addy = new Address(this.address);
+		return addy;
 	}
 	
 	
