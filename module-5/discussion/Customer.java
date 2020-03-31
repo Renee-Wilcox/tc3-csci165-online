@@ -93,7 +93,9 @@ public class Customer {
 	
 	public String toString()
 	{
-		return firstName + " " + lastName + "\n" + email +  "\n" + address;
+		/* Null pointer handler for address */
+		String addressStr = address == null ? null : address.toString();
+		return String.format("Name: %s\nEmail: %s\nAddress: %s\n", getName(), getEmail(), addressStr);
 	}
 	
 	
