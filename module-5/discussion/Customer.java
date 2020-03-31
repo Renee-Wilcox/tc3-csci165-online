@@ -70,14 +70,16 @@ public class Customer {
 	
 	public Address getAddress()
 	{
-		return this.address;
+		Address add = new Address(this.address);
+		return add;
 	}
 	
 	
 
 	public void setAddress(Address addy)
 	{
-		this.address = addy;
+		address = new Address(addy); /* This will fix the leak */
+		address = addy;
 	}
 	
 	
